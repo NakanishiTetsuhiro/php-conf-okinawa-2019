@@ -23,30 +23,24 @@ class OrderService
 
     public function execOrder(): array
     {
-        try {
-            $cartItems = $this->cart->getCartItemByUserId(Auth::id());
-            if ($cartItems->isEmpty()) {
-                return ['cart.index', 'カートの中に商品がありません。'];
-            }
-
-            if ($this->isStockEmpty($cartItems)) {
-                return ['cart.index', '商品の在庫がない商品がありました。'];
-            }
-
-            $amount = $this->calculateAmount($cartItems);
-
-            $result = $this->paymentService->pay($amount);
-            if ($result === false) {
-                return ['cart.index', 'カード決済に失敗しました。'];
-            }
-
-            # 注文確定情報を保存
-            $this->order->store($amount);
-
-        } catch(\Exception $e) {
-            Log::error($e->getMessage());
-            return ['cart.index', '注文処理に失敗しました'];
+        $cartItems = $this->cart->getCartItemByUserId(Auth::id());
+        if ($cartItems->isEmpty()) {
+            return ['cart.index', 'カートの中に商品がありません。'];
         }
+
+        if ($this->isStockEmpty($cartItems)) {
+            return ['cart.index', '商品の在庫がない商品がありました。'];
+        }
+
+        $amount = $this->calculateAmount($cartItems);
+
+        $result = $this->paymentService->pay($amount);
+        if ($result === false) {
+            return ['cart.index', 'カード決済に失敗しました。'];
+        }
+
+        # 注文確定情報を保存
+        $this->order->store($amount);
 
         return ['orders.thanksPage', null];
     }
