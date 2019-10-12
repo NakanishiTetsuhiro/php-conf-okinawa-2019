@@ -1,6 +1,6 @@
 # PHPカンファレンス沖縄2019発表用サンプルコード
 
-本リポジトリは[こちら]()のスライドと合わせて御覧ください
+本リポジトリは[こちら](https://speakerdeck.com/nakanishitetsuhiro/laraveldeshe-ji-suruji-false-besutopurakuteisuwotan-ru)のスライドと合わせて御覧ください
 
 ## Important!!
 本Laravelプロジェクトは発表資料の補助として作成されたものです。
